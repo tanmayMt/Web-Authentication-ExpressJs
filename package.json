@@ -2,10 +2,16 @@
   "name": "web-authentication-expressjs",
   "version": "1.0.0",
   "description": "Web authentication (WebAuthn) is a modern, secure standard for authenticating users on websites and apps without relying on traditional passwords. It uses biometrics (like fingerprints or facial recognition), hardware security keys, or device-based methods to verify user identity. WebAuthn enhances security by reducing risks of phishing, password leaks, and brute-force attacks.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tanmay Samanata",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
 }
