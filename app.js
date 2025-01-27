@@ -43,13 +43,16 @@ app.post("/register",async(req,res)=>{
 
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({email:email});
-    if(user && user.password === password){
-        res.status(200).json({ status: "valid user" });
-    }
-    else {
-      res.status(404).json({ status: `${email} not valid user` });
+    const { email, password } = req.body; // Extract email and password from the request body
+
+    // Find the user in the database by email
+    const user = await User.findOne({ email: email });
+
+    // Check if the user exists and if the provided password matches the stored password
+    if (user && user.password === password) {// If valid, send a success response
+      res.status(200).json({ status: "valid user" });
+    } else {
+      res.status(404).json({ status: `${email} not valid user` }); // If invalid, send a "Not valid user" response
     }
   } catch (error) {
     res.status(500).json(error.message);
