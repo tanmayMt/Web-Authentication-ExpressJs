@@ -1,3 +1,40 @@
+// 2: Database Encryption
+// https://cryptii.com/
+// - read mongoose encryption documentation: https://www.npmjs.com/package/mongoose-encryption
+// - install mongoose encryption `npm install mongoose-encryption`
+// - create new mongoose Schema
+
+  // ```js
+  // const mongoose = require("mongoose");
+  // const encrypt = require("mongoose-encryption");
+
+  // const userSchema = new mongoose.Schema({
+  //   name: String,
+  //   age: Number,
+  //   // whatever else
+  // });
+  // ```
+
+// - create an encryption key inside .env file
+
+//   ```js
+//   ENCRYPTION_KEY = thisismyencryptionkey;
+//   ```
+
+// - set encryption key with our schema
+
+//   ```js
+//   const encrypt = require("mongoose-encryption");
+
+//   const encKey = process.env.ENCRYPTION_KEY;
+//   // encrypt password regardless of any other options. name and _id will be left unencrypted
+//   userSchema.plugin(encrypt, {
+//     secret: encKey,
+//     encryptedFields: ["password"],
+//   });
+
+//   User = mongoose.model("User", userSchema);
+
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -50,7 +87,11 @@ app.post("/login", async (req, res) => {
 
     // Check if the user exists and if the provided password matches the stored password
     if (user && user.password === password) {// If valid, send a success response
-      res.status(200).json({ status: "valid user" });
+      res.status(200).send({
+        success:true,
+        message: "Valid User",
+        data:user
+      });
     } else {
       res.status(404).json({ status: `${email} not valid user` }); // If invalid, send a "Not valid user" response
     }
