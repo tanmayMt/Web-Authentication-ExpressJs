@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 // hashing + salting password
+// Hashing transforms a password into a fixed-length encrypted value for secure storage. Salting adds a unique random string to each password before hashing to make the hash unique, even for identical passwords. bcrypt combines both processes, ensuring strong protection against brute force, dictionary, and rainbow table attacks.
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
