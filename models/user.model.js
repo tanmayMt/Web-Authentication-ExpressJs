@@ -53,11 +53,13 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Retrieve the encryption key from environment variables for security
 const encKey = process.env.ENC_KEY;
+// Add the encryption plugin to the schema
 userSchema.plugin(encrypt, {
-  secret: encKey,
-  // signingKey: sigKey,
-  encryptedFields: ["password"],
+  secret: encKey, // The encryption key used to encrypt data
+  // signingKey: sigKey, // Uncomment and provide a signing key if data integrity verification is required
+  encryptedFields: ["password"], // Specifies that only the password field should be encrypted
 });
 
 module.exports = mongoose.model("user", userSchema);
