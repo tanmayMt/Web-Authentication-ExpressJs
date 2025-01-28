@@ -41,10 +41,12 @@ app.post("/register",async(req,res)=>{
 // During user registration, the bcrypt.hash() function is used to hash the user's password with a defined number of salt rounds (saltRounds).
 // The hashed password is stored in the database to ensure sensitive data isn't saved in plain text.
     try{
+        // Hash the user's password before saving it to the database
         bcrypt.hash(req.body.password,saltRounds, async function (err, hash){
+            // Create a new user with the hashed password
             const newUser = new User({
-                email: req.body.email,
-                password: hash
+                email: req.body.email,// Assign the email provided in the request
+                password: hash // Store the securely hashed password
             });
             await newUser.save();
             res.status(201).send({success:true,message:"Registeration Successfull",data:newUser});
@@ -69,6 +71,9 @@ app.post("/login", async (req, res) => {
         bcrypt.compare(password, user.password,function (err, result){
             if (result === true) {
                 res.status(200).send({success:true,message: "Valid User",data:user});
+            }
+            else{
+              res.status(200).send({message:"Invalid PAssword"})
             }
         });
     }
