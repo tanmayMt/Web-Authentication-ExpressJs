@@ -1,7 +1,7 @@
 require("./config/database");
 require("dotenv").config();
 const express = require("express");
-const User = require("./models/user.model")
+const User = require("./models/user.model");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 // Import the passport module to handle authentication strategies
@@ -12,6 +12,7 @@ const MongoStore = require("connect-mongo"); //'connect-mongo' used to store ses
 // EJS allows you to write dynamic HTML templates by embedding JavaScript code directly within the HTML.
 // It is used to render HTML views for routes, like res.render("pageName"), where pageName corresponds to an .ejs file in the views directory.
 // Why use it: EJS simplifies generating dynamic web pages with variables and logic directly in the templates, making it a popular choice for server-side rendering.
+require("./config/passport"); // Import the passport configuration to set up authentication strategies and session handling
 const ejs = require("ejs");
 const app = express();
 
@@ -80,6 +81,15 @@ app.post("/register",async(req,res)=>{
 app.get("/login",(req,res)=>{
     res.render("login");
 })
+
+// login : post
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    successRedirect: "/profile",
+  })
+);
 
 app.get("/profile",(req,res)=>{
     res.render("profile");
