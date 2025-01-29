@@ -95,4 +95,8 @@ app.get("/profile",(req,res)=>{
     res.render("profile");
 })
 
+app.get("/logout",(req,res)=>{
+    res.redirect("/")
+})
+
 module.exports = app;
