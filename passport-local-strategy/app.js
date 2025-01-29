@@ -78,7 +78,16 @@ app.post("/register",async(req,res)=>{
   }
 })
 
-app.get("/login",(req,res)=>{
+// Middleware to check if the user is already logged in
+const checkLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/profile");// Redirects logged-in users to the profile page
+  }
+  next();// Proceeds to the next middleware or route handler if not logged in
+};
+
+// Route to display the login page if the user is not already logged in
+app.get("/login",checkLoggedIn,(req,res)=>{
     res.render("login");
 })
 
