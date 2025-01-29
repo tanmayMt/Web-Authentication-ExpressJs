@@ -91,6 +91,7 @@ const checkLoggedIn = (req, res, next) => {
 app.get("/login",checkLoggedIn,(req,res)=>{
   // res.render("login");
   res.render("login", { username: req.query.username || "" });
+  res.redirect(`/login?username=${encodeURIComponent(username)}`);
 })
 
 // login : post
@@ -112,7 +113,8 @@ const checkAuthenticated = (req, res, next) => {
 
 // Route to render the profile page
 app.get("/profile", checkAuthenticated, (req, res) => {
-    res.render("profile"); // Renders the "profile" view if the user is authenticated
+  res.render("profile",{username:req.user.username}); // Renders the "profile" view if the user is authenticated
+                    //  Passes the authenticated user's username to the "profile" view
 });
 
 
