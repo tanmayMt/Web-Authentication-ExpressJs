@@ -69,7 +69,8 @@ app.post("/register",async(req,res)=>{
             password:hash
         });
         newUser.save();
-        res.redirect("/login");
+        res.redirect(`/login?username=${encodeURIComponent(username)}`);
+        // res.redirect("/login");
         // res.status(201).send({success:true,message:"Registeration Successfull",data:newUser});
     })
   }
@@ -88,7 +89,8 @@ const checkLoggedIn = (req, res, next) => {
 
 // Route to display the login page if the user is not already logged in
 app.get("/login",checkLoggedIn,(req,res)=>{
-    res.render("login");
+  // res.render("login");
+  res.render("login", { username: req.query.username || "" });
 })
 
 // login : post
