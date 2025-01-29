@@ -1,0 +1,21 @@
+<%-include("layout/header")%>
+<main>
+  <h2>Login Page</h2><br>
+  <form action="/login" method="post">
+    <div>
+      <label for="username">username: </label>
+      <!-- <input type="text" id="username" name="username" value="" /> -->
+      <input type="text" id="username" name="username" placeholder="Enter Your Gmail" value="<%= username ? username : '' %>" />
+
+    </div>
+    <br />
+    <div>
+      <label for="password">password: </label>
+      <input type="password" id="password" name="password" placeholder="Enter Your Password"/>
+    </div>
+    <br />
+    <button type="submit"style="margin-right: 15px;"><b>Login</b></button>
+    <a href="/auth/google" class="google-btn">Login with Google</a>
+  </form>
+</main>
+<%-include("layout/footer")%>
