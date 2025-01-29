@@ -1,7 +1,8 @@
 require("./config/database");
 const express = require("express");
 const User = require("./models/user.model")
-
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 // EJS allows you to write dynamic HTML templates by embedding JavaScript code directly within the HTML.
 // It is used to render HTML views for routes, like res.render("pageName"), where pageName corresponds to an .ejs file in the views directory.
 // Why use it: EJS simplifies generating dynamic web pages with variables and logic directly in the templates, making it a popular choice for server-side rendering.
@@ -23,17 +24,25 @@ app.get("/register",(req,res)=>{
 })
 
 app.post("/register",async(req,res)=>{
-    const username = req.body.username;
-    const user = await User.findOne({ username: username });
-    if(user){
-        return res.status(400).send("User is Already Exists");
-    }
-    const newUser = new User({
-        username:username,
-        password:req.body.password
+    try{
+        const username = req.body.username;
+        const user = await User.findOne({ username: username });
+        if(user){
+            return res.status(400).send("User is Already Exists");
+        }
+        const password = req.body.password;
+        bcrypt.hash(password,saltRounds,async (err, hash)=>{
+            const newUser = new User({
+            username:username,
+            password:hash
+        });
+        newUser.save();
+        res.status(201).send({success:true,message:"Registeration Successfull",data:newUser});
     })
-    newUser.save();
-    res.status(201).send({success:true,message:"Registeration Successfull",data:newUser});
+  }
+  catch(error){
+    res.status(500).send(error.message);
+  }
 })
 
 app.get("/login",(req,res)=>{
