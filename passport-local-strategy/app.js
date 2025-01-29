@@ -5,7 +5,7 @@ const User = require("./models/user.model")
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 // Import the passport module to handle authentication strategies
-const passport = require("passport");
+const passport = require("passport"); //https://www.passportjs.org/
 // Import express-session to handle session management (tracking user's logged-in state)
 const session = require("express-session");  //store session data   https://www.npmjs.com/package/express-session
 const MongoStore = require("connect-mongo"); //'connect-mongo' used to store session data in a MongoDB database instead of the default memory store.
@@ -30,15 +30,20 @@ app.use(session({
   resave: false,           // Prevents the session from being saved back to the store if it hasn't been modified.
   saveUninitialized: true, // Forces the session to be saved even if it hasn't been modified (e.g., for new sessions).
   
+  // Compatible Session Stores
+  //connect-mongo A MongoDB-based session store.  https://www.npmjs.com/package/connect-mongo
   store: MongoStore.create({ //This method initializes and creates a session store backed by MongoDB
     mongoUrl: process.env.MONGO_URL,   // The MongoDB connection string stored in environment variables for security.
     collectionName: "sessions",        // The name of the collection where session data will be stored in MongoDB.
-})
+   })
   // Uncomment the following line if using HTTPS and want to ensure the cookie is only sent over secure connections.
   // cookie: { secure: true } // Ensure cookies are only sent over HTTPS (useful for production).
 }));
-// Compatible Session Stores
-//connect-mongo A MongoDB-based session store.  https://www.npmjs.com/package/connect-mongo
+
+// Initialize Passport for handling authentication
+app.use(passport.initialize());  // Initializes Passport, allowing it to process authentication requests
+// Enable session support in Passport
+app.use(passport.session());  // Configures Passport to store user information in the session
 
 // base url
 app.get("/", (req, res) => {
