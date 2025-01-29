@@ -91,12 +91,27 @@ app.post(
   })
 );
 
+
+
 app.get("/profile",(req,res)=>{
     res.render("profile");
 })
 
-app.get("/logout",(req,res)=>{
-    res.redirect("/")
-})
+// Route to handle user logout
+app.get("/logout", (req, res) => {
+  try {
+    // Logs out the user and removes the session
+    req.logout((err) => {
+      if (err) {
+        return next(err); // Passes the error to the next middleware
+        //In Express.js, next is a function that passes control to the next middleware function in the request-response cycle.
+        //If an error occurs inside a middleware function, calling next(err) will forward the error to Express's built-in error-handling middleware.
+      }
+      res.redirect("/"); // Redirects to the home page after logout
+    });
+  } catch (error) {
+    res.status(500).send(error.message); // Sends a 500 error response if something goes wrong
+  }
+});
 
 module.exports = app;
