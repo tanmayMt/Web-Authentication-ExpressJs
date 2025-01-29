@@ -30,7 +30,9 @@ passport.use(
         //If authentication fails, done is called with null for the user, false to indicate failure, and an optional message.
       }
       // Compare the provided password with the stored hashed password
-      if (!bcrypt.compare(password, user.password)) {
+      // Corrected: Await bcrypt.compare to ensure it's properly handled
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
         return done(null, false, { message: "Incorrect password (config\\passport.js passport.use(new LocalStrategy()))" });
         //If authentication fails, done is called with null for the user, false to indicate failure, and an optional message.
       }
