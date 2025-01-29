@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Authentication</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #e96443, #904e95);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      padding: 1rem 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    footer {
+        margin-top: auto;
+        width: 100%;
+        background: linear-gradient(to right, #ff7eb3, #ff4896);
+        text-align: center;
+        padding: 1.5rem 0;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: bold;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        letter-spacing: 1px;
+        border-top: 4px solid #ff1f6d;
+    }
+
+    footer p {
+        margin: 0;
+        animation: glow 2s infinite alternate;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      background: #ff7eb3;
+      color: #fff;
+    }
+
+    nav a:hover {
+      background: #ff4896;
+      color: #000;
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(255, 72, 150, 0.5);
+    }
+
+    nav a:active {
+      transform: scale(0.9);
+      background: #ff1f6d;
+    }
+
+    main {
+      margin-top: 5rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+      button {
+        font-size: 1.1rem;
+        padding: 0.7rem;
+        border: none;
+        border-radius: 30px;
+        background: #ff7eb3;
+        color: hsl(58, 73%, 54%);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: hsl(99, 100%, 64%);
+        color: #24298c;
+        box-shadow: 0 4px 15px rgba(255, 72, 150, 0.5);
+        transform: translateY(-3px);
+      }
+
+      button:active {
+        transform: translateY(2px);
+      }
+            label {
+        font-size: 1rem;
+        font-weight: bold;
+        font-style: inherit;
+      }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/register">Register</a>
+      <a href="/login">Login</a>
+      <a href="/profile">Profile</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Welcome to Our Website</h1>
+    <p>
+      Explore the various features of our site by navigating through the links
+      in the menu above. Enjoy a stylish and user-friendly experience.
+    </p>
+  </main>
+</body>
+
+</html>

@@ -73,7 +73,7 @@ app.post("/login", async (req, res) => {
                 res.status(200).send({success:true,message: "Valid User",data:user});
             }
             else{
-              res.status(200).send({message:"Invalid PAssword"})
+              res.status(200).send({message:"Invalid Password"})
             }
         });
     }
