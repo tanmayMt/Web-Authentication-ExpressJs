@@ -91,11 +91,19 @@ app.post(
   })
 );
 
+// Middleware to check if the user is authenticated
+const checkAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {  // Checks if the user is authenticated using Passport.js
+    return next(); // If authenticated, proceed to the next middleware or route handler
+  }
+  res.redirect("/login"); // If not authenticated, redirect the user to the login page
+};
 
+// Route to render the profile page
+app.get("/profile", checkAuthenticated, (req, res) => {
+    res.render("profile"); // Renders the "profile" view if the user is authenticated
+});
 
-app.get("/profile",(req,res)=>{
-    res.render("profile");
-})
 
 // Route to handle user logout
 app.get("/logout", (req, res) => {
