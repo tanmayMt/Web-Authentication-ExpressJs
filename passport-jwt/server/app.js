@@ -4,6 +4,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const User = require("./models/user.model");
+jwt = require('jsonwebtoken');
 
 const app = express();
 require("./config/database");
@@ -67,16 +68,34 @@ app.post("/login", async (req, res) => {
       message: "Incorrect password",
     });
   }
+
+  //if user and password both is verified than we can genarate a token and loggin successfully
+  // https://www.npmjs.com/package/jsonwebtoken
+  const payload = {
+    id: user._id,
+    username: user.username,
+  };
+  const token = jwt.sign(payload, process.env.SECRET_KEY, {
+    expiresIn: "2d",
+  });
+
   return res.status(200).send({
     success: true,
-    message: "User is logged in successfully"
+    message: "User is logged in successfully",
+    token: "Bearer " + token,
   });
 });
+
+// {
+//     "success": true,
+//     "message": "User is logged in successfully",
+//     "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWI1Nzk2Zjk4N2UzNTljMGNiYTVlYSIsInVzZXJuYW1lIjoicXciLCJpYXQiOjE3MzgyMzM3ODgsImV4cCI6MTczODQwNjU4OH0.n2cif1k8DC8zE6LM1EUWOjsBGKBaJmSshGyoDKnlAPw"
+// }
 
 app.get("/profile", async (req, res) => {
   res.send("<h2>Profile</h2>");
 });
-
+ 
 //resource not found
 app.use((req, res, next) => {
   res.status(404).json({
