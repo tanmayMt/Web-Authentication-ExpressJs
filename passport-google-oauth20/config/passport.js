@@ -5,6 +5,7 @@ require("dotenv").config();
 const passport = require("passport");      // For Passport.js functionality
 const LocalStrategy = require("passport-local").Strategy; // For the LocalStrategy, used for username/password authentication
 const User = require("../models/user.model"); // Import your User model, to interact with the user data in your database
+
 const bcrypt = require("bcrypt");
 
 //https://www.passportjs.org/packages/passport-google-oauth20/

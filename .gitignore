@@ -3,6 +3,17 @@ Web_Authentication_ExpressJS_Documentation.md
 ChatGPT_Help.txt
 .env
 passport-local-strategy/node_modules/
+passport-local-strategy/.env
 passport-google-oauth20/node_modules/
+passport-google-oauth20/.env
 passport-google-oauth20/Google_Developers_Console/
 passport-google-oauth20/Google_Developers_Console
+
+passport-jwt/client/node_modules/
+passport-jwt/client/node_modules
+
+passport-jwt/server/node_modules/
+passport-jwt/server/node_modules
+
+passport-jwt/server/.env
+passport-jwt/client/.env

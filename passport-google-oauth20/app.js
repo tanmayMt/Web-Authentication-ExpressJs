@@ -51,33 +51,33 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-// app.get("/register",(req,res)=>{
-//     res.render("register");
-// })
+app.get("/register",(req,res)=>{
+  res.render("register");
+})
 
-// app.post("/register",async(req,res)=>{
-//     try{
-//         const username = req.body.username;
-//         const user = await User.findOne({ username: username });
-//         if(user){
-//             return res.status(400).send("User is Already Exists");
-//         }
-//         const password = req.body.password;
-//         bcrypt.hash(password,saltRounds,async (err, hash)=>{
-//             const newUser = new User({
-//             username:username,
-//             password:hash
-//         });
-//         newUser.save();
-//         res.redirect(`/login?username=${encodeURIComponent(username)}`);
-//         // res.redirect("/login");
-//         // res.status(201).send({success:true,message:"Registeration Successfull",data:newUser});
-//     })
-//   }
-//   catch(error){
-//     res.status(500).send(error.message);
-//   }
-// })
+app.post("/register",async(req,res)=>{
+    try{
+        const username = req.body.username;
+        const user = await User.findOne({ username: username });
+        if(user){
+            return res.status(400).send("User is Already Exists");
+        }
+        const password = req.body.password;
+        bcrypt.hash(password,saltRounds,async (err, hash)=>{
+            const newUser = new User({
+            username:username,
+            password:hash
+        });
+        newUser.save();
+        res.redirect(`/login?username=${encodeURIComponent(username)}`);
+        // res.redirect("/login");
+        // res.status(201).send({success:true,message:"Registeration Successfull",data:newUser});
+    })
+  }
+  catch(error){
+    res.status(500).send(error.message);
+  }
+})
 
 // Middleware to check if the user is already logged in
 const checkLoggedIn = (req, res, next) => {
@@ -97,13 +97,13 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
 // login : post
-// app.post(
-//   "/login",
-//   passport.authenticate("local", {
-//     failureRedirect: "/login",
-//     successRedirect: "/profile",
-//   })
-// );
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    successRedirect: "/profile",
+  })
+);
 
 app.get('/auth/google/callback', 
   passport.authenticate('google', {
