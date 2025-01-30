@@ -75,14 +75,15 @@ app.post("/login", async (req, res) => {
     id: user._id,
     username: user.username,
   };
+  // Generate a JWT token using the payload and secret key
   const token = jwt.sign(payload, process.env.SECRET_KEY, {
-    expiresIn: "2d",
+    expiresIn: "2d",// Token will expire in 2 days
   });
 
   return res.status(200).send({
     success: true,
     message: "User is logged in successfully",
-    token: "Bearer " + token,
+    token: "Bearer " + token, // Attach the generated JWT token with "Bearer" prefix for authentication
   });
 });
 
@@ -91,6 +92,9 @@ app.post("/login", async (req, res) => {
 //     "message": "User is logged in successfully",
 //     "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWI1Nzk2Zjk4N2UzNTljMGNiYTVlYSIsInVzZXJuYW1lIjoicXciLCJpYXQiOjE3MzgyMzM3ODgsImV4cCI6MTczODQwNjU4OH0.n2cif1k8DC8zE6LM1EUWOjsBGKBaJmSshGyoDKnlAPw"
 // }
+//when user sent a requtest to the server with token, than server will cheack the validation of this token
+//To validate this token we will use password-jwt https://www.passportjs.org/packages/passport-jwt/
+// we will do that authentication part at config/passport.js file
 
 app.get("/profile", async (req, res) => {
   res.send("<h2>Profile</h2>");
