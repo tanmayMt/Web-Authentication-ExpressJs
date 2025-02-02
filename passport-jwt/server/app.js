@@ -1,10 +1,13 @@
 require("dotenv").config();
+require("./config/passport");
+
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const User = require("./models/user.model");
-jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const passport = require("passport");
 
 const app = express();
 require("./config/database");
@@ -12,6 +15,9 @@ require("./config/database");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(passport.initialize());
+
 
 // home route
 app.get("/", (req, res) => {
@@ -87,6 +93,49 @@ app.post("/login", async (req, res) => {
   });
 });
 
+
+// app.post("/login", async (req, res) => {
+//   const { username, password } = req.body;
+
+//   if (!username || !password) {
+//     return res.status(400).send({
+//       success: false,
+//       message: "Username and password are required",
+//     });
+//   }
+
+//   const user = await User.findOne({ username });
+//   if (!user) {
+//     return res.status(401).send({
+//       success: false,
+//       message: "User not found",
+//     });
+//   }
+
+//   const match = bcrypt.compareSync(password, user.password);
+//   if (!match) {
+//     return res.status(401).send({
+//       success: false,
+//       message: "Incorrect password",
+//     });
+//   }
+
+//   const payload = {
+//     id: user._id,
+//     username: user.username,
+//   };
+//   const token = jwt.sign(payload, process.env.SECRET_KEY, {
+//     expiresIn: "2d",
+//   });
+
+//   return res.status(200).send({
+//     success: true,
+//     message: "User logged in successfully",
+//     token: "Bearer " + token,
+//   });
+// });
+
+
 // {
 //     "success": true,
 //     "message": "User is logged in successfully",
@@ -96,10 +145,26 @@ app.post("/login", async (req, res) => {
 //To validate this token we will use password-jwt https://www.passportjs.org/packages/passport-jwt/
 // we will do that authentication part at config/passport.js file
 
-app.get("/profile", async (req, res) => {
-  res.send("<h2>Profile</h2>");
-});
+
+// app.get("/profile", async (req, res) => {
+//   res.send("<h2>Profile</h2>");
+// });
  
+// profile route
+app.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  function (req, res) {
+    return res.status(200).send({
+      success: true,
+      user: {
+        id: req.user._id,
+        username: req.user.username,
+      },
+    });
+  }
+);
+
 //resource not found
 app.use((req, res, next) => {
   res.status(404).json({
